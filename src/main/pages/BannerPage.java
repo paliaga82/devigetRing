@@ -18,6 +18,7 @@ public class BannerPage extends PageBase {
 	//---------------------------------------------------------------------------------------------
 	public BannerPage(WebDriver driver) {
 		super(driver);
+		setPageName("Banner");
 	}
 
 	@Override
@@ -34,4 +35,12 @@ public class BannerPage extends PageBase {
 		clickElement(By.cssSelector(BANNER_BUTTON_CLOSE_LOCATOR_CSS));
 	}
 
+	//---------------------------------------------------------------------------------------------
+	// Complex actions
+	//---------------------------------------------------------------------------------------------
+	public void closeBannerIfDispleyd() {
+		if (isPageDsiplayed()) {
+			clickCloseButton();
+		}
+	}
 }

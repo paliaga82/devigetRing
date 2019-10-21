@@ -2,10 +2,11 @@ package main.tests;
 
 import org.openqa.selenium.WebDriver;
 
+import main.base.TestBase;
 import main.pages.BannerPage;
 import main.pages.MainPage;
 
-public class Tests {
+public class Tests extends TestBase {
 
 	private WebDriver driver;
 	private MainPage mainPage;
@@ -19,13 +20,14 @@ public class Tests {
 		String searchProduct = "ipod";
 
 		bannerPage = new BannerPage(driver);
+		bannerPage.closeBannerIfDispleyd();
 
-		if (bannerPage.isPageDsiplayed()) {
-			bannerPage.clickCloseButton();
-		}
 		mainPage = new MainPage(driver);
+		verifyPageLoaded(mainPage);
 		mainPage.setSearchField(searchProduct);
 		mainPage.clickSearchButton();
+
+		bannerPage.closeBannerIfDispleyd();
 	}
 
 }

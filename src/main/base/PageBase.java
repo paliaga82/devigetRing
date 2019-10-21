@@ -22,6 +22,7 @@ public abstract class PageBase extends Report {
 
 	protected WebDriver driver;
 	private WebDriverWait wait;
+	private String pageName;
 
 	public PageBase(WebDriver driver) {
 		setDriver(driver);
@@ -55,6 +56,15 @@ public abstract class PageBase extends Report {
 	public void waitPageToLoad(By locator) {
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
+
+	protected void setPageName(String pageName) {
+		this.pageName = pageName;
+	}
+
+	public String getPageName() {
+		return this.pageName;
+	}
+
 	//---------------------------------------------------------------------------------------------
 	// Element operations
 	//---------------------------------------------------------------------------------------------
@@ -81,9 +91,9 @@ public abstract class PageBase extends Report {
 				jsResult = jse.executeScript(js);
 			}
 		} catch (StaleElementReferenceException e) {
-			System.out.println("Error executing javascript, stale element reference.");
+			writeInReport("Error executing javascript, stale element reference.");
 		} catch (Exception e) {
-			System.out.println("Error executing javascript.");
+			writeInReport("Error executing javascript.");
 		}
 		return jsResult;
 	}
@@ -93,27 +103,24 @@ public abstract class PageBase extends Report {
 	}
 
 	public WebElement clickElement(WebElement element) {
-		if (WRITE_DETAILED_LOG) {
-			writeInReport("Clicking element [%s].", element.toString());
-		}
 		scrollIntoView(element);
 		try {
 			element.click();
 		} catch(Exception e) {
-			System.out.println(String.format("Click element exception, not able to click [%s].", element.toString()));
+			writeInReport("Click element exception, not able to click [%s].", element.toString());
 		}
 		return element;
 	}
 
 	public WebElement clickElement(By locator) {
+		if (WRITE_DETAILED_LOG) {
+			writeInReport("Clicking element [%s] at [%s] page.", locator.toString(), getPageName());
+		}
 		WebElement element = findElement(locator);
 		return clickElement(element);
 	}
 
 	public WebElement completeField(WebElement element, String value, boolean clearField) {
-		if (WRITE_DETAILED_LOG) {
-			writeInReport("Writing [%s] in element [%s].", value, element.toString());
-		}
 		scrollIntoView(element);
 		if (clearField) {
 			element.clear();
@@ -123,13 +130,15 @@ public abstract class PageBase extends Report {
 	}
 
 	public WebElement completeField(By locator, String value, boolean clearField) {
+		if (WRITE_DETAILED_LOG) {
+			writeInReport("Writing [%s] in element [%s] at [%s] page.", value, locator.toString(), getPageName());
+		}
 		WebElement element = findElement(locator);
 		return completeField(element, value, clearField);
 	}
 
 	public WebElement completeField(By locator, String value) {
-		WebElement element = findElement(locator);
-		return completeField(element, value, true);
+		return completeField(locator, value, true);
 	}
 
 	public String getFieldValue(WebElement element) {

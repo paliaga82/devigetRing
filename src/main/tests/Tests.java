@@ -20,6 +20,7 @@ public class Tests extends TestBase {
 
 	public void verifyStock() {
 		String searchProduct = "ipod";
+		int pageNumber = 2;
 
 		bannerPage = new BannerPage(driver);
 		bannerPage.closeBannerIfDispleyd();
@@ -34,6 +35,10 @@ public class Tests extends TestBase {
 
 		searchResultsPage = new SearchResultsPage(driver);
 		verifyPageLoaded(searchResultsPage);
+		searchResultsPage.scrollPageToBottom();
+		searchResultsPage.clickPageButton(pageNumber);
+		// FIXME: After scrolling down, not selecting element, verify if element are created dynamically after they're displayed in the screen.
+		// Alternative, use [Go To Page] functionality.
 	}
 
 }

@@ -1,5 +1,7 @@
 package main.base;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -71,6 +73,10 @@ public abstract class PageBase extends Report {
 	//---------------------------------------------------------------------------------------------
 	public WebElement findElement(By locator) {
 		return getDriver().findElement(locator);
+	}
+
+	public List<WebElement> findElements(By locator) {
+		return getDriver().findElements(locator);
 	}
 
 	public boolean isElementPresent(By locator) {

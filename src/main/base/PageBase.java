@@ -8,11 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public abstract class PageBase {
+import main.Report;
+
+public abstract class PageBase extends Report {
 
 	//---------------------------------------------------------------------------------------------
 	// Constants
 	//---------------------------------------------------------------------------------------------
+	private final boolean WRITE_DETAILED_LOG = true;
 	private final long MAX_WAIT_FOR_ELEMENTS = 10;
 
 	//---------------------------------------------------------------------------------------------
@@ -90,6 +93,9 @@ public abstract class PageBase {
 	}
 
 	public WebElement clickElement(WebElement element) {
+		if (WRITE_DETAILED_LOG) {
+			writeInReport("Clicking element [%s].", element.toString());
+		}
 		scrollIntoView(element);
 		try {
 			element.click();
@@ -105,6 +111,9 @@ public abstract class PageBase {
 	}
 
 	public WebElement completeField(WebElement element, String value, boolean clearField) {
+		if (WRITE_DETAILED_LOG) {
+			writeInReport("Writing [%s] in element [%s].", value, element.toString());
+		}
 		scrollIntoView(element);
 		if (clearField) {
 			element.clear();

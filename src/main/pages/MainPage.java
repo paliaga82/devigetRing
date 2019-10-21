@@ -10,7 +10,7 @@ public class MainPage extends PageBase {
 	//---------------------------------------------------------------------------------------------
 	// Locator
 	//---------------------------------------------------------------------------------------------
-	private final String MAIN_PAGE_LOGO_LOCATOR_CSS = "a[href='//www.aliexpress.com/?spm=a2g0o.home.1000002.1.650c3b27FpOuae']";
+	private final String MAIN_PAGE_BODY_LOCATOR_CSS = "body[data-spm='home']";
 
 	private final String MAIN_PAGE_INPUT_SEARCH_LOCATOR_CSS = "input#search-key";
 	private final String MAIN_PAGE_BUTTON_SEARCH_LOCATOR_CSS = "form#form-searchbar input.search-button";
@@ -20,11 +20,12 @@ public class MainPage extends PageBase {
 	//---------------------------------------------------------------------------------------------
 	public MainPage(WebDriver driver) {
 		super(driver);
+		setPageName("Main");
 	}
 
 	@Override
 	public boolean isPageDsiplayed() {
-		return isElementPresent(By.cssSelector(MAIN_PAGE_LOGO_LOCATOR_CSS));
+		return isElementPresent(By.cssSelector(MAIN_PAGE_BODY_LOCATOR_CSS));
 	}
 
 	@Override

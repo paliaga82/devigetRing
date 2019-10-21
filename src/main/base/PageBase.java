@@ -21,8 +21,13 @@ public abstract class PageBase {
 	private WebDriverWait wait;
 
 	public PageBase(WebDriver driver) {
-		this.driver = driver;
+		setDriver(driver);
 		setWait(MAX_WAIT_FOR_ELEMENTS);
+		this.waitPageToLoad();
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
 	}
 
 	public WebDriver getDriver() {

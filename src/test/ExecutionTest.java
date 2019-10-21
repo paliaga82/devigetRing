@@ -8,6 +8,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import main.pages.BannerPage;
 import main.pages.MainPage;
 
 public class ExecutionTest {
@@ -31,6 +32,10 @@ public class ExecutionTest {
 	public void smokeTest() {
 		System.out.println(">>> The test has started.");
 		MainPage mainPage = new MainPage(driver);
+		BannerPage bannerPage = new BannerPage(driver);
+		if (bannerPage.isPageDsiplayed()) {
+			bannerPage.clickCloseButton();
+		}
 		mainPage.setSearchField("ipod");
 		mainPage.clickSearchButton();
 	}

@@ -1,4 +1,4 @@
-# Code Challenge Resolution
+# Code Challenge Solution
 
 # SDET--SG
 

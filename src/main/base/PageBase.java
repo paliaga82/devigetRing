@@ -1,19 +1,40 @@
 package main.base;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class PageBase {
 
+	//---------------------------------------------------------------------------------------------
+	// Constants
+	//---------------------------------------------------------------------------------------------
+	private final long MAX_WAIT_FOR_ELEMENTS = 10;
+
+	//---------------------------------------------------------------------------------------------
+
 	protected WebDriver driver;
+	private WebDriverWait wait;
 
 	public PageBase(WebDriver driver) {
 		this.driver = driver;
+		setWait(MAX_WAIT_FOR_ELEMENTS);
 	}
 
 	public WebDriver getDriver() {
 		return driver;
+	}
+
+	protected void setWait(long waitingTimeInSeconds) {
+		wait = new WebDriverWait(getDriver(), waitingTimeInSeconds);
+	}
+
+	public WebDriverWait getWait() {
+		return wait;
 	}
 
 	//---------------------------------------------------------------------------------------------
@@ -23,6 +44,9 @@ public abstract class PageBase {
 
 	public abstract void waitPageToLoad();
 
+	public void waitPageToLoad(By locator) {
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
 	//---------------------------------------------------------------------------------------------
 	// Element operations
 	//---------------------------------------------------------------------------------------------
@@ -30,7 +54,38 @@ public abstract class PageBase {
 		return getDriver().findElement(locator);
 	}
 
+	public boolean isElementPresent(By locator) {
+		try {
+			findElement(locator);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public Object jsExec(WebElement ele, String js) {
+		Object jsResult = "";
+		try {
+			JavascriptExecutor jse = (JavascriptExecutor) driver;
+			if(ele != null) {
+				jsResult = jse.executeScript(js, ele);
+			} else {
+				jsResult = jse.executeScript(js);
+			}
+		} catch (StaleElementReferenceException e) {
+			System.out.println("Error executing javascript, stale element reference.");
+		} catch (Exception e) {
+			System.out.println("Error executing javascript.");
+		}
+		return jsResult;
+	}
+
+	public void scrollIntoView(WebElement element) {
+		jsExec(element, "arguments[0].scrollIntoView({ behavior: 'auto', block: 'center',inline: 'center'});");
+	}
+
 	public WebElement clickElement(WebElement element) {
+		scrollIntoView(element);
 		try {
 			element.click();
 		} catch(Exception e) {
@@ -45,6 +100,7 @@ public abstract class PageBase {
 	}
 
 	public WebElement completeField(WebElement element, String value, boolean clearField) {
+		scrollIntoView(element);
 		if (clearField) {
 			element.clear();
 		}
@@ -63,6 +119,7 @@ public abstract class PageBase {
 	}
 
 	public String getFieldValue(WebElement element) {
+		scrollIntoView(element);
 		return element.getText();
 	}
 

@@ -8,6 +8,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import main.pages.MainPage;
+
 public class ExecutionTest {
 
 	private WebDriver driver;
@@ -28,6 +30,9 @@ public class ExecutionTest {
 	@Test
 	public void smokeTest() {
 		System.out.println(">>> The test has started.");
+		MainPage mainPage = new MainPage(driver);
+		mainPage.setSearchField("ipod");
+		mainPage.clickSearchButton();
 	}
 
 	@AfterTest

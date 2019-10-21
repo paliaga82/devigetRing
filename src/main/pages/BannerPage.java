@@ -10,15 +10,14 @@ public class BannerPage extends PageBase {
 	//---------------------------------------------------------------------------------------------
 	// Locator
 	//---------------------------------------------------------------------------------------------
-	private final String BANNER_WINDOW_LOCATOR_CSS = "div.ui-window.ui-window-normal.ui-window-transition.ui-newuser-layer-dialog";
+	private final String BANNER_WINDOW_LOCATOR_CSS       = "div.ui-window.ui-window-normal.ui-window-transition.ui-newuser-layer-dialog";
 	private final String BANNER_BUTTON_CLOSE_LOCATOR_CSS = "a[data-role='layer-close']";
 
 	//---------------------------------------------------------------------------------------------
 	// Actions
 	//---------------------------------------------------------------------------------------------
 	public BannerPage(WebDriver driver) {
-		super(driver);
-		setPageName("Banner");
+		super(driver, "Banner");
 	}
 
 	@Override

@@ -24,9 +24,10 @@ public abstract class PageBase extends Report {
 	private WebDriverWait wait;
 	private String pageName;
 
-	public PageBase(WebDriver driver) {
+	public PageBase(WebDriver driver, String pageName) {
 		setDriver(driver);
 		setWait(MAX_WAIT_FOR_ELEMENTS);
+		setPageName(pageName);
 		this.waitPageToLoad();
 	}
 
@@ -57,7 +58,7 @@ public abstract class PageBase extends Report {
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
 
-	protected void setPageName(String pageName) {
+	private void setPageName(String pageName) {
 		this.pageName = pageName;
 	}
 

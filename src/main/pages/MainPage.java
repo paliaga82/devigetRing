@@ -19,8 +19,7 @@ public class MainPage extends PageBase {
 	// Actions
 	//---------------------------------------------------------------------------------------------
 	public MainPage(WebDriver driver) {
-		super(driver);
-		setPageName("Main");
+		super(driver, "Main");
 	}
 
 	@Override

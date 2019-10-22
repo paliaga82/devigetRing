@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import main.base.TestBase;
 import main.pages.BannerPage;
 import main.pages.MainPage;
+import main.pages.ProductPage;
 import main.pages.SearchResultsPage;
 
 public class Tests extends TestBase {
@@ -13,6 +14,7 @@ public class Tests extends TestBase {
 	private MainPage mainPage;
 	private BannerPage bannerPage;
 	private SearchResultsPage searchResultsPage;
+	private ProductPage productPage;
 
 	public Tests(WebDriver driver) {
 		this.driver = driver;
@@ -21,6 +23,7 @@ public class Tests extends TestBase {
 	public void verifyStock() {
 		String searchProduct = "ipod";
 		int pageNumber = 2;
+		int elementFromList = 2;
 
 		bannerPage = new BannerPage(driver);
 		bannerPage.closeBannerIfDispleyd();
@@ -35,13 +38,11 @@ public class Tests extends TestBase {
 
 		searchResultsPage = new SearchResultsPage(driver);
 		verifyPageLoaded(searchResultsPage);
-		searchResultsPage.scrollPageToBottom();
-		searchResultsPage.setGoToPageField(pageNumber);
-		searchResultsPage.clickGoToPageButton();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-		}
+		searchResultsPage.goToPage(pageNumber);
+		searchResultsPage.clickProductFromList(elementFromList);
+		productPage = new ProductPage(driver);
+		verifyPageLoaded(productPage);
+		writeCustomMessageInReport("Stock: " + productPage.getStockAvailable());
 	}
 
 }

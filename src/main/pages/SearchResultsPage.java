@@ -40,6 +40,11 @@ public class SearchResultsPage extends PageBase {
 		waitPageToLoad(By.cssSelector(SEARCH_RESULTS_LIST_LOCATOR_CSS));
 	}
 
+	public void clickProductFromList(int item) {
+		List<WebElement> productList = findElements(By.cssSelector(SEARCH_RESULTS_LIST_LOCATOR_CSS));
+		clickElement(productList.get(item - 1));
+	}
+
 	public void clickPreviousPageButton() {
 		clickElement(By.cssSelector(SEARCH_RESULTS_BUTTON_PREVIOUS_PAGE_LOCATOR_CSS));
 	}
@@ -65,15 +70,23 @@ public class SearchResultsPage extends PageBase {
 		clickElement(By.cssSelector(SEARCH_RESULTS_BUTTON_GO_TO_PAGE_LOCATOR_CSS));
 	}
 
-	public void scrollPageToBottom() { // FIXME: Verify if needs to scroll part by part instead of going straight to bottom
-		/*jsExec(null, "window.scrollTo(0, document.body.scrollHeight)");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-		}*/
+	public void scrollPageToBottom() {
 		int step = 250;
 		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS))) {
 			jsExec(null, String.format("window.scrollBy(0, %d);", step));
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------
+	// Complex actions
+	//---------------------------------------------------------------------------------------------
+	public void goToPage(int pageNumber) {
+		scrollPageToBottom();
+		setGoToPageField(pageNumber);
+		clickGoToPageButton();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
 		}
 	}
 }

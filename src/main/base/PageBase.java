@@ -68,6 +68,24 @@ public abstract class PageBase extends Report {
 		return this.pageName;
 	}
 
+	public void waitTabToOpen() {
+		int attemps = 0;
+		WebDriver wd = getDriver();
+		while ((wd.getWindowHandles().size() == 1) && attemps <= MAX_WAIT_FOR_ELEMENTS) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+			attemps++;
+		}
+	}
+
+	public void switchTab() {
+		for (String window : getDriver().getWindowHandles()) {
+			getDriver().switchTo().window(window);
+		}
+	}
+
 	//---------------------------------------------------------------------------------------------
 	// Element operations
 	//---------------------------------------------------------------------------------------------

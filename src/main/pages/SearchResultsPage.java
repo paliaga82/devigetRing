@@ -72,7 +72,7 @@ public class SearchResultsPage extends PageBase {
 
 	public void scrollPageToBottom() {
 		int step = 250;
-		int pageHeight = Integer.valueOf(jsExec(null, "return document.body.scrollHeigt;").toString());
+		int pageHeight = Integer.valueOf(jsExec(null, "return document.body.scrollHeight;").toString());
 		int pos = 0;
 
 		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS)) && pos <= pageHeight) {

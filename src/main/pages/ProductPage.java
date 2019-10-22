@@ -32,8 +32,9 @@ public class ProductPage extends PageBase {
 		waitPageToLoad(By.cssSelector(PRODUCT_INFO_LOCATOR_CSS));
 	}
 
-	public String getStockAvailable() {
-		return getFieldValue(By.cssSelector(PRODUCT_LABEL_AVAILABILITY_LOCATOR_CSS));
+	public int getStockAvailable() {
+		String stock = getFieldValue(By.cssSelector(PRODUCT_LABEL_AVAILABILITY_LOCATOR_CSS));
+		return Integer.valueOf(stock.replaceAll("\\D+", ""));
 	}
 
 }

@@ -1,6 +1,7 @@
 package main.tests;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import main.base.TestBase;
 import main.pages.BannerPage;
@@ -42,7 +43,9 @@ public class Tests extends TestBase {
 		searchResultsPage.clickProductFromList(elementFromList);
 		productPage = new ProductPage(driver);
 		verifyPageLoaded(productPage);
-		writeCustomMessageInReport("Stock: " + productPage.getStockAvailable());
+		int stockAvailable = productPage.getStockAvailable();
+		writeCustomMessageInReport("Stock available: " + stockAvailable);
+		Assert.assertTrue(stockAvailable > 0, "No Stock available.");
 	}
 
 }

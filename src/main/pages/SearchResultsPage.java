@@ -41,6 +41,7 @@ public class SearchResultsPage extends PageBase {
 	}
 
 	public void clickProductFromList(int item) {
+		scrollPageToBottom(); // to ensure dynamically created elements were created.
 		List<WebElement> productList = findElements(By.cssSelector(SEARCH_RESULTS_LIST_LOCATOR_CSS));
 		clickElement(productList.get(item - 1));
 	}
@@ -75,7 +76,7 @@ public class SearchResultsPage extends PageBase {
 		int pageHeight = Integer.valueOf(jsExec(null, "return document.body.scrollHeight;").toString());
 		int pos = 0;
 
-		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS)) && pos <= pageHeight) {
+		while (pos <= pageHeight) {
 			pos += step;
 			jsExec(null, String.format("window.scrollBy(0, %d);", step));
 		}

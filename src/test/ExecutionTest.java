@@ -13,6 +13,7 @@ import main.tests.Tests;
 public class ExecutionTest {
 
 	private WebDriver driver;
+	Tests test;
 	private String url = "http://www.aliexpress.com";
 
 	private String getWebDriverPath() {
@@ -25,15 +26,15 @@ public class ExecutionTest {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get(url);
+		test = new Tests(driver);
 	}
 
 	@Test
-	public void test() {
-		Tests test = new Tests(driver);
+	public void codeChallenge() {
+		String searchProduct = "samsung";
+		int pageNumber = 3;
+		int elementFromList = 15;
 
-		String searchProduct = "iphone";
-		int pageNumber = 2;
-		int elementFromList = 2;
 		test.verifyStock(searchProduct, pageNumber, elementFromList);
 	}
 

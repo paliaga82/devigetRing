@@ -36,9 +36,12 @@ public class Tests extends TestBase {
 		searchResultsPage = new SearchResultsPage(driver);
 		verifyPageLoaded(searchResultsPage);
 		searchResultsPage.scrollPageToBottom();
-		searchResultsPage.clickPageButton(pageNumber);
-		// FIXME: After scrolling down, not selecting element, verify if element are created dynamically after they're displayed in the screen.
-		// Alternative, use [Go To Page] functionality.
+		searchResultsPage.setGoToPageField(pageNumber);
+		searchResultsPage.clickGoToPageButton();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+		}
 	}
 
 }

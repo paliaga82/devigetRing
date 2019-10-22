@@ -20,6 +20,9 @@ public class SearchResultsPage extends PageBase {
 	private final String SEARCH_RESULTS_BUTTON_PAGE_NUMBER_LOCATOR_CSS   = "div.next-pagination-list button";
 	private final String SEARCH_RESULTS_BUTTON_NEXT_PAGE_LOCATOR_CSS     = "button.next-btn.next-medium.next-btn-normal.next-pagination-item.next-next";
 
+	private final String SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS  = "div.jump-aera input";
+	private final String SEARCH_RESULTS_BUTTON_GO_TO_PAGE_LOCATOR_CSS = "div.jump-aera span.jump-btn";
+
 	//---------------------------------------------------------------------------------------------
 	// Actions
 	//---------------------------------------------------------------------------------------------
@@ -50,11 +53,27 @@ public class SearchResultsPage extends PageBase {
 		clickElement(By.cssSelector(SEARCH_RESULTS_BUTTON_NEXT_PAGE_LOCATOR_CSS));
 	}
 
+	public void setGoToPageField(String value) {
+		completeField(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS), value);
+	}
+
+	public void setGoToPageField(int value) {
+		setGoToPageField(String.valueOf(value));
+	}
+
+	public void clickGoToPageButton() {
+		clickElement(By.cssSelector(SEARCH_RESULTS_BUTTON_GO_TO_PAGE_LOCATOR_CSS));
+	}
+
 	public void scrollPageToBottom() { // FIXME: Verify if needs to scroll part by part instead of going straight to bottom
-		jsExec(null, "window.scrollTo(0, document.body.scrollHeight)");
+		/*jsExec(null, "window.scrollTo(0, document.body.scrollHeight)");
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
+		}*/
+		int step = 250;
+		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS))) {
+			jsExec(null, String.format("window.scrollBy(0, %d);", step));
 		}
 	}
 }

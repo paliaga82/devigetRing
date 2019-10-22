@@ -28,9 +28,13 @@ public class ExecutionTest {
 	}
 
 	@Test
-	public void smokeTest() {
+	public void test() {
 		Tests test = new Tests(driver);
-		test.verifyStock();
+
+		String searchProduct = "iphone";
+		int pageNumber = 2;
+		int elementFromList = 2;
+		test.verifyStock(searchProduct, pageNumber, elementFromList);
 	}
 
 	@AfterTest

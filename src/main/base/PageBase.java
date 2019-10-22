@@ -56,6 +56,10 @@ public abstract class PageBase extends Report {
 
 	public abstract void waitPageToLoad();
 
+	public String getCurrentUrl() {
+		return getDriver().getCurrentUrl();
+	}
+
 	public void waitPageToLoad(By locator) {
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}

@@ -21,11 +21,7 @@ public class Tests extends TestBase {
 		this.driver = driver;
 	}
 
-	public void verifyStock() {
-		String searchProduct = "ipod";
-		int pageNumber = 2;
-		int elementFromList = 2;
-
+	public void verifyStock(String searchProduct, int pageNumber, int elementFromList) {
 		bannerPage = new BannerPage(driver);
 		bannerPage.closeBannerIfDispleyd();
 
@@ -41,10 +37,11 @@ public class Tests extends TestBase {
 		verifyPageLoaded(searchResultsPage);
 		searchResultsPage.goToPage(pageNumber);
 		searchResultsPage.clickProductFromList(elementFromList);
+
 		productPage = new ProductPage(driver);
 		verifyPageLoaded(productPage);
 		int stockAvailable = productPage.getStockAvailable();
-		writeCustomMessageInReport("Stock available: " + stockAvailable);
+		writeCustomMessageInReport(String.format("Stock available: %d\nPage URL: %s", stockAvailable, productPage.getCurrentUrl()));
 		Assert.assertTrue(stockAvailable > 0, "No Stock available.");
 	}
 

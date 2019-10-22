@@ -14,7 +14,7 @@ public class SearchResultsPage extends PageBase {
 	// Locator
 	//---------------------------------------------------------------------------------------------
 	private final String SEARCH_RESULTS_BODY_LOCATOR_CSS = "body[data-spm='productlist']";
-	private final String SEARCH_RESULTS_LIST_LOCATOR_CSS = "div.list-wrap.product-list";
+	private final String SEARCH_RESULTS_LIST_LOCATOR_CSS = "div.list-wrap.product-list li a.item-title";
 
 	private final String SEARCH_RESULTS_BUTTON_PREVIOUS_PAGE_LOCATOR_CSS = "button.next-btn.next-medium.next-btn-normal.next-pagination-item.next-prev";
 	private final String SEARCH_RESULTS_BUTTON_PAGE_NUMBER_LOCATOR_CSS   = "div.next-pagination-list button";
@@ -72,7 +72,11 @@ public class SearchResultsPage extends PageBase {
 
 	public void scrollPageToBottom() {
 		int step = 250;
-		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS))) {
+		int pageHeight = Integer.valueOf(jsExec(null, "return document.body.scrollHeigt;").toString());
+		int pos = 0;
+
+		while (! isElementPresent(By.cssSelector(SEARCH_RESULTS_INPUT_GO_TO_PAGE_LOCATOR_CSS)) && pos <= pageHeight) {
+			pos += step;
 			jsExec(null, String.format("window.scrollBy(0, %d);", step));
 		}
 	}

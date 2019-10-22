@@ -31,9 +31,9 @@ public class ExecutionTest {
 
 	@Test
 	public void codeChallenge() {
-		String searchProduct = "samsung";
-		int pageNumber = 3;
-		int elementFromList = 15;
+		String searchProduct = "iphone";
+		int pageNumber = 2;
+		int elementFromList = 2;
 
 		test.verifyStock(searchProduct, pageNumber, elementFromList);
 	}
